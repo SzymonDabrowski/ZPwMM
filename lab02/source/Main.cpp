@@ -39,6 +39,7 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 			CHAR szText[50];
 			GetWindowText(hwndEditBox, szText, iTextLength + 1);
 
+			// ERROR WHILE USING THIS FUNCTION
 			SetWindowText(HWND(lParam), szText);
 
 			return TRUE;
