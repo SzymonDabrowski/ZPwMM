@@ -128,9 +128,7 @@
     <Image Include="!mucha.bmp" />
     <Image Include="..\..\source\!mucha.bmp" />
     <Image Include="..\..\source\background.bmp" />
-    <Image Include="..\..\source\bitmap1.bmp" />
     <Image Include="..\..\source\mucha.bmp" />
-    <Image Include="background.bmp" />
     <Image Include="mucha.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

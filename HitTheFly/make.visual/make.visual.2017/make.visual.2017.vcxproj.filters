@@ -33,9 +33,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\source\bitmap1.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="!mucha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -46,9 +43,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\source\mucha.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="background.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\source\background.bmp">
