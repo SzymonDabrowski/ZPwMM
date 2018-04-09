@@ -45,7 +45,16 @@
     <Image Include="..\..\source\mucha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\source\background.bmp">
+    <Image Include="b_w_mucha.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\source\b_w_mucha.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="b_w_not_mucha.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\source\b_w_not_mucha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

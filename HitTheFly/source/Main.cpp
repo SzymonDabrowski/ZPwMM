@@ -12,10 +12,9 @@
 
 //TODO(deGrasso):
 //		- refreshing
-//		- complete the class and functions
-//		- second image (fly size) - b&w, as a mask (fly form) - irl we use 1 file
 //		- put class in another file
-//		- make public and private sections in class
+//		- fly in 3D
+//		- program w/o images
 
 
 #define ID_TIMER_FLY 2137
@@ -27,6 +26,8 @@
 
 
 HINSTANCE hInst;
+HWND hwndButton_Reset;
+
 
 int iWidth, iHeight;
 double dt = 0.15; // to timer - 0.1s; timer of move
@@ -65,7 +66,8 @@ public:
 
 	bool isAlive(int iMouseX, int iMouseY);
 	void refresh(HDC hDC);
-	void display(HDC &hDC, HDC &hDCBitmap, HBITMAP &hBitmap_alive, HBITMAP &hBitmap_dead);
+	void display(HDC & hDC, HDC & hDCBitmap, HBITMAP & hBitmap_alive, HBITMAP & hBitmap_dead, HBITMAP & hBitmap_alive_alpha, HBITMAP & hBitmap_dead_alpha);
+	//void display(HDC &hDC, HDC &hDCBitmap, HBITMAP &hBitmap_alive, HBITMAP &hBitmap_dead);
 	void move();
 	void brain();
 	void reborn();
@@ -92,18 +94,24 @@ void sFly::refresh(HDC hDC)
 	return;
 }
 
-void sFly::display(HDC &hDC, HDC &hDCBitmap, HBITMAP &hBitmap_alive, HBITMAP &hBitmap_dead)
+void sFly::display(HDC &hDC, HDC &hDCBitmap, HBITMAP &hBitmap_alive, HBITMAP &hBitmap_dead, HBITMAP &hBitmap_alive_alpha, HBITMAP &hBitmap_dead_alpha)
 {
+	if (this->m_bIsAlive)
+		SelectObject(hDCBitmap, hBitmap_alive_alpha);
+	else
+		SelectObject(hDCBitmap, hBitmap_dead_alpha);
+
+	BitBlt(hDC, this->m_iFlyXPos, this->m_iFlyYPos, 100, 100, hDCBitmap, 0, 0, SRCPAINT);
+
 	if (this->m_bIsAlive)
 		SelectObject(hDCBitmap, hBitmap_alive);
 	else
 		SelectObject(hDCBitmap, hBitmap_dead);
 	
-	BitBlt(hDC, this->m_iFlyXPos, this->m_iFlyYPos, 100, 100, hDCBitmap, 0, 0, SRCCOPY);
+	BitBlt(hDC, this->m_iFlyXPos, this->m_iFlyYPos, 100, 100, hDCBitmap, 0, 0, SRCAND);
 
 	return;
 }
-
 
 /// <summary>
 /// Makes flies move in the window.This is not changing their directions - vois sFly::brain() does.
@@ -162,6 +170,33 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		flies = new sFly[FLY_COUNT]; //std::vector instead - no problems with destructor
 
+		hwndButton_Reset = CreateWindow("BUTTON", "Reset", WS_CHILD | BS_FLAT, 10, 10, 100, 50, hwndDlg, NULL, hInst, NULL);
+		ShowWindow(hwndButton_Reset, SW_SHOW);
+
+		HRGN hrgnMainWindow = CreateRoundRectRgn(0,0,iWidth + 100,iHeight + 100,20,20); // (0,0,...) wzglêdem okna
+		HRGN hrgnElipse = CreateEllipticRgn(100, 100, 150, 120);
+		HRGN hrgnFinal = CreateEllipticRgn(100, 100, 150, 120);;
+		
+		/*POINT pointArray[6];
+		pointArray[0].x = 0;
+		pointArray[0].y = 0;
+		pointArray[1].x = 100;
+		pointArray[1].y = 10;
+		pointArray[2].x = 450;
+		pointArray[2].y = 20;
+		pointArray[3].x = 500;
+		pointArray[3].y = 200;
+		pointArray[4].x = 400;
+		pointArray[4].y = 300;
+		pointArray[5].x = 0;
+		pointArray[5].y = 220;
+		hrgnFinal = CreatePolygonRgn(pointArray,6,WINDING);*/
+		
+		CombineRgn(hrgnFinal, hrgnMainWindow, hrgnElipse, RGN_DIFF);
+
+		SetWindowRgn(hwndDlg, hrgnFinal, true);
+		UpdateWindow(hwndDlg);
+
 		return TRUE;
 	}
 	case WM_CLOSE:
@@ -192,19 +227,28 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SelectObject(hDC, GetStockObject(WHITE_BRUSH));
 		SelectObject(hDC, GetStockObject(NULL_PEN)); //without frame
 
-		for (int i = 0; i < 10; ++i)
-			flies[i].refresh(hDC);
+		// not sFly, WM_PAINT HAS TO DO THIS
+		// also too many refreshing operations
+		//for (int i = 0; i < 10; ++i)
+			flies[0].refresh(hDC);
 
-		HBITMAP hBitmap_alive, hBitmap_dead; // z zasobów
+
+		HBITMAP hBitmap_alive; // z zasobów
+		HBITMAP hBitmap_dead;
+		HBITMAP hBitmap_alive_alpha;
+		HBITMAP hBitmap_dead_alpha;
+
 		hBitmap_alive = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_FLY));
 		hBitmap_dead = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_DEADFLY));
+		hBitmap_alive_alpha = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_FLY_ALPHA));
+		hBitmap_dead_alpha = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_DEADFLY_ALPHA));
 		//hBitmap_alive = (HBITMAP)LoadImage(NULL, "D:\\repos\\ZPwMM\\HitTheFly\\source\\mucha.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		//hBitmap_dead = (HBITMAP)LoadImage(NULL, "D:\\repos\\ZPwMM\\HitTheFly\\source\\!mucha.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
 		HDC hDCBitmap = CreateCompatibleDC(hDC);
 
 		for (int i = 0; i < 10; ++i)
-			flies[i].display(hDC, hDCBitmap, hBitmap_alive, hBitmap_dead);
+			flies[i].display(hDC, hDCBitmap, hBitmap_alive, hBitmap_dead, hBitmap_alive_alpha, hBitmap_dead_alpha);
 
 		DeleteObject(hBitmap_dead);
 		DeleteObject(hBitmap_alive);
