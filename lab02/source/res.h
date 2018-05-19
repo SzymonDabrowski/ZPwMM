@@ -4,9 +4,6 @@
 //
 #define IDD_FORMVIEW                    101
 #define IDD_MAINVIEW                    101
-#define IDB_BACKGROUND                  112
-#define IDC_BUTTON1                     1001
-#define IDC_EDIT1                       1002
 
 // Next default values for new objects
 // 

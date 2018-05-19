@@ -20,9 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="res.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\res.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -31,13 +28,5 @@
     <ResourceCompile Include="..\..\source\res.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="background.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\source\background.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

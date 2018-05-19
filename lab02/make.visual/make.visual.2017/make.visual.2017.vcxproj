@@ -84,7 +84,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\repos\ZPwMM\lab02\glew-2.1.0\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\repos\ZPwMM\lab02\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -119,14 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\res.h" />
-    <ClInclude Include="res.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\source\res.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\source\background.bmp" />
-    <Image Include="background.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
