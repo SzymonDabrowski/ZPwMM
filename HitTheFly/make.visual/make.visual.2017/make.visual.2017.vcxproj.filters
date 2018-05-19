@@ -20,9 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="res.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\res.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -33,25 +30,13 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="!mucha.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="mucha.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="..\..\source\!mucha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\source\mucha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="b_w_mucha.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="..\..\source\b_w_mucha.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="b_w_not_mucha.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\..\source\b_w_not_mucha.bmp">

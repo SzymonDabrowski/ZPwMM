@@ -7,7 +7,8 @@
 #define IDB_DEADFLY                     110
 #define IDB_FLY                         111
 #define IDB_FLY_ALPHA                   113
-#define IDB_DEADFLY_ALPHA               114
+#define IDB_DEADFLY_ALPHA               1144
+#define IDB_RESET						115
 
 // Next default values for new objects
 // 

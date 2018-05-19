@@ -119,20 +119,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\res.h" />
-    <ClInclude Include="res.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\source\res.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="!mucha.bmp" />
     <Image Include="..\..\source\!mucha.bmp" />
     <Image Include="..\..\source\b_w_mucha.bmp" />
     <Image Include="..\..\source\b_w_not_mucha.bmp" />
     <Image Include="..\..\source\mucha.bmp" />
-    <Image Include="b_w_mucha.bmp" />
-    <Image Include="b_w_not_mucha.bmp" />
-    <Image Include="mucha.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

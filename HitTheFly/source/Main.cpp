@@ -9,14 +9,6 @@
 #include <math.h>
 #include "res.h"
 
-
-//TODO(deGrasso):
-//		- refreshing
-//		- put class in another file
-//		- fly in 3D
-//		- program w/o images
-
-
 #define ID_TIMER_FLY 2137
 #define ID_TIMER_BRAIN 2138
 #define ID_TIMER_REBORN 2139
@@ -58,7 +50,7 @@ public:
 		this->m_iFlyXPos = rand() % iWidth; //"this->" not needed but more clearly
 		this->m_iFlyYPos = rand() % iHeight; 
 
-		srand(time(NULL));
+		srand(static_cast<UINT>(time(NULL)));
 		
 		this->m_iFlyAngle = rand() % 100;
 		this->m_iFlySpeed = 35;
@@ -78,8 +70,8 @@ bool sFly::isAlive(int iMouseX, int iMouseY)
 {
 	if (iMouseX > this->m_iFlyXPos && iMouseX < (this->m_iFlyXPos + this->m_iFlyWidth) && 
 		iMouseY > this->m_iFlyYPos && iMouseY < (this->m_iFlyYPos + this->m_iFlyHeight))
-		
 		return this->m_bIsAlive = FALSE;
+	return TRUE;
 }
 
 void sFly::refresh(HDC hDC)
@@ -120,8 +112,8 @@ void sFly::move()
 {
 	if (this->m_bIsAlive)
 	{
-		this->m_iFlyXPos += this->m_iFlySpeed * cos(this->m_iFlyAngle*PI / 180)*dt;
-		this->m_iFlyYPos += this->m_iFlySpeed * sin(this->m_iFlyAngle*PI / 180)*dt;
+		this->m_iFlyXPos += this->m_iFlySpeed * cos(this->m_iFlyAngle*PI / 180)*dt; // double to int is OK, because x, y pos are int
+		this->m_iFlyYPos += this->m_iFlySpeed * sin(this->m_iFlyAngle*PI / 180)*dt; // double to int is OK, because x, y pos are int
 
 
 		if (this->m_iFlyXPos > iWidth - this->m_iFlyWidth)
@@ -170,31 +162,31 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 		flies = new sFly[FLY_COUNT]; //std::vector instead - no problems with destructor
 
-		hwndButton_Reset = CreateWindow("BUTTON", "Reset", WS_CHILD | BS_FLAT, 10, 10, 100, 50, hwndDlg, NULL, hInst, NULL);
+		hwndButton_Reset = CreateWindow("BUTTON", "Reset", WS_CHILD | BS_FLAT, 10, 10, 100, 50, hwndDlg, (HMENU)IDB_RESET, hInst, NULL);
 		ShowWindow(hwndButton_Reset, SW_SHOW);
 
-		HRGN hrgnMainWindow = CreateRoundRectRgn(0,0,iWidth + 100,iHeight + 100,20,20); // (0,0,...) wzglêdem okna
-		HRGN hrgnElipse = CreateEllipticRgn(100, 100, 150, 120);
-		HRGN hrgnFinal = CreateEllipticRgn(100, 100, 150, 120);;
-		
-		/*POINT pointArray[6];
-		pointArray[0].x = 0;
-		pointArray[0].y = 0;
-		pointArray[1].x = 100;
-		pointArray[1].y = 10;
-		pointArray[2].x = 450;
-		pointArray[2].y = 20;
-		pointArray[3].x = 500;
-		pointArray[3].y = 200;
-		pointArray[4].x = 400;
-		pointArray[4].y = 300;
-		pointArray[5].x = 0;
-		pointArray[5].y = 220;
-		hrgnFinal = CreatePolygonRgn(pointArray,6,WINDING);*/
-		
-		CombineRgn(hrgnFinal, hrgnMainWindow, hrgnElipse, RGN_DIFF);
-
-		SetWindowRgn(hwndDlg, hrgnFinal, true);
+		//HRGN hrgnMainWindow = CreateRoundRectRgn(0,0,iWidth + 100,iHeight + 100,20,20); // (0,0,...) wzglêdem okna
+		//HRGN hrgnElipse = CreateEllipticRgn(100, 100, 150, 120);
+		//HRGN hrgnFinal = CreateEllipticRgn(100, 100, 150, 120);;
+		//
+		////POINT pointArray[6];
+		//pointArray[0].x = 0;
+		//pointArray[0].y = 0;
+		//pointArray[1].x = 100;
+		//pointArray[1].y = 10;
+		//pointArray[2].x = 450;
+		//pointArray[2].y = 20;
+		//pointArray[3].x = 500;
+		//pointArray[3].y = 200;
+		//pointArray[4].x = 400;
+		//pointArray[4].y = 300;
+		//pointArray[5].x = 0;
+		//pointArray[5].y = 220;
+		////hrgnFinal = CreatePolygonRgn(pointArray,6,WINDING);
+		//
+		//CombineRgn(hrgnFinal, hrgnMainWindow, hrgnElipse, RGN_DIFF);
+		//
+		//SetWindowRgn(hwndDlg, hrgnFinal, true);
 		UpdateWindow(hwndDlg);
 
 		return TRUE;
@@ -289,6 +281,22 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
 		{
 			for (int i = 0; i < 10; ++i)
 				flies[i].reborn();
+			return TRUE;
+		}
+		}
+	}
+	case WM_COMMAND:
+	{
+		switch (wParam)
+		{
+		case IDB_RESET:
+		{
+			for (int i = 0; i < 10; ++i)
+				flies[i].reborn();
+
+			for (int i = 0; i < 10; ++i)
+				flies[i].move();
+
 			return TRUE;
 		}
 		}
