@@ -288,7 +288,7 @@ unsigned char* ReadBmpFromFile(const char* szFileName, int &riWidth, int &riHeig
 
 			riWidth = v;
 			riHeight = h;
-			pRGBBuffer = new unsigned char[riWidth*riHeight * 3]; //Zaalokowanie odpowiedniego buffora obrazu
+			pRGBBuffer = new unsigned char[riWidth*riHeight * 3]; //Zaalokowanie odpowiedniego bufora obrazu
 
 																  //Za³aduj Palete barw jesli jest
 			if ((lev == 1) || (lev == 4) || (lev == 8))
